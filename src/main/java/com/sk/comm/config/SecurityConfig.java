@@ -49,11 +49,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/**").permitAll()
         .and()
             .formLogin()
-                .loginPage("/my/login") // 로그인 처리 POST 는 동일한 경로로
+                .loginPage("/login") // 로그인 처리 POST 는 동일한 경로로
                 .defaultSuccessUrl("/")
         .and()
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/my/logout"))
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
         .and()
@@ -71,6 +71,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
+        //AuthenticationProvider
+
+        //UsernamePasswordAuthenticationFilter
         /*auth.inMemoryAuthentication()
                 .withUser("user").password("{noop}1111").authorities("ROLE_USER")
                 .and()
