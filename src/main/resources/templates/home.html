@@ -1,25 +1,20 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		 layout:decorate="~{layout/default}">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="/css/lib/bootstrap.min.css" >
-  <title>Hello, world!</title>
+	<title>hello</title>
 </head>
 <body>
-	<div class="container">
-		<div>
-			<h1>Hello Spring</h1>
-			<p>회원 기능</p>
-			<p>
-				<a href="/members/new">회원 가입</a> 
-				<a href="/members">회원 목록</a>
-			</p>
+<div class="container" layout:fragment="content">
+	<div class="col-md-12">
+		<div class="h-100 p-5 bg-light border rounded-3">
+			<h2>Change the background</h2>
+			<p>Swap the background-color utility and add a `.text-*` color utility to mix up the jumbotron look. Then, mix and match with additional component themes and more.</p>
+			<button class="btn btn-outline-secondary" type="button"><a href="/users/register" class="text-decoration-none">회원 가입</a></button>
+			<button class="btn-outline-secondary" type="button"><a href="/users" class="text-decoration-none">회원 목록</a></button>
 		</div>
 	</div>
-	<!-- /container -->
+</div>
 </body>
-<script src="/js/lib/jquery.min.js" ></script>
-<script src="/js/lib/popper.min.js" ></script>
-<script src="/js/lib/bootstrap.min.js" ></script>
 </html>

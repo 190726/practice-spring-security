@@ -1,13 +1,19 @@
 server:
   port: 9999
 
+logging:
+    level:
+      root: info
+      com:
+        sk: debug
+      p4spy: info # query ? 값 출력
+
 spring:
   profiles:
     active:
       - heroku
+      -
 
-  mustache:
-    suffix: .html
 ---
 spring:
   profiles: my-local
@@ -17,13 +23,20 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: true
+  h2:
+    console:
+      enabled: true
+  thymeleaf:
+    cache: false
+
+
 
 ---
 spring:
   profiles: heroku
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
 
 ---
@@ -41,7 +54,3 @@ spring:
     hibernate:
       ddl-auto: create # oracle은 drop을 진행 후, create 를 하므로 최초 table 이 없는 경우 drop 오류 발생
     show-sql: true
-
-logging:
-  level:
-    p4spy: info # query에서 ? 부분의 값을 보여준다.
