@@ -1,10 +1,9 @@
-package com.sk.comm.config;
+package com.sk.user.config;
 
 import com.sk.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -12,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -47,24 +45,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/hello/**").access("hasRole('USER')")
                 .antMatchers("/users/**").access("hasRole('ADMIN')")
                 .antMatchers("/", "/**").permitAll()
-        .and()
-            .formLogin()
+                .and()
+                .formLogin()
                 .loginPage("/login") // 로그인 처리 POST 는 동일한 경로로
                 .defaultSuccessUrl("/")
-        .and()
+                .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
-        .and()
+                .and()
                 /* for H2 console */
                 .csrf().ignoringAntMatchers("/h2-console/**")
-        .and()
+                .and()
                 .headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
-        .and()
-            .exceptionHandling()
+                .and()
+                .exceptionHandling()
                 .accessDeniedPage("/denied");
-            ;
 
     }
 

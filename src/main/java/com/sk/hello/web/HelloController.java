@@ -14,14 +14,9 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("hello")
-public class HelloController  implements WebMvcConfigurer {
+public class HelloController {
 
     private final HelloRepository repository;
-
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("home");
-    }
 
     @GetMapping("/save")
     public String hello() {
