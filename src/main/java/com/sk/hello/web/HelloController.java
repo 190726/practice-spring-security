@@ -20,8 +20,11 @@ public class HelloController {
 
     @GetMapping("/save")
     public String hello() {
+        // test 로직
         repository.save(new Hello(1L, "ss"));
         repository.save(new Hello(2L, "ss1"));
+        repository.save(new Hello(3L, "ss2"));
+        repository.save(new Hello(4L, "ss3"));
         return "hello save called.";
     }
 
