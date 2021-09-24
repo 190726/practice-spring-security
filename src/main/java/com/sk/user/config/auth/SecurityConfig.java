@@ -1,9 +1,14 @@
-package com.sk.user.config;
+package com.sk.user.config.auth;
 
 import com.sk.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+import javax.annotation.PostConstruct;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -11,15 +16,22 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
+    
+    @PostConstruct
+    public void init() {
+    	log.info("SecurityConfig init()");
+    }
 
     /**
      * 비밀번호 암호화를 위한 Bean
@@ -45,23 +57,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/hello/**").access("hasRole('USER')")
                 .antMatchers("/users/**").access("hasRole('ADMIN')")
                 .antMatchers("/", "/**").permitAll()
-                .and()
-                .formLogin()
-                .loginPage("/login") // 로그인 처리 POST 는 동일한 경로로
+        .and()
+            .formLogin()
+                .loginPage("/auth/login") // 로그인 처리 POST 는 동일한 경로로
                 .defaultSuccessUrl("/")
-                .and()
+        .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
-                .and()
+        .and()
                 /* for H2 console */
                 .csrf().ignoringAntMatchers("/h2-console/**")
-                .and()
+        .and()
                 .headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
-                .and()
-                .exceptionHandling()
+        .and()
+            .exceptionHandling()
                 .accessDeniedPage("/denied");
+            ;
 
     }
 
@@ -75,7 +88,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("user").password("{noop}1111").authorities("ROLE_USER")
                 .and()
                 .withUser("admin").password("{noop}1111").authorities("ROLE_ADMIN","ROLE_USER");*/
-        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+        auth
+        .userDetailsService(userService).passwordEncoder(passwordEncoder());
 
     }
 }

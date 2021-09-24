@@ -47,7 +47,7 @@ public class UserController {
         return "users/denied";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/auth/login")
     public String login(){
         return "users/login";
     }

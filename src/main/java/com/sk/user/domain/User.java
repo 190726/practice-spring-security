@@ -3,6 +3,8 @@ package com.sk.user.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +23,9 @@ import java.util.stream.Collectors;
         initialValue = 1)
 public class User implements UserDetails {
 
-    @Id
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY,
             generator = "USER_SEQ_GEN")
     private Long id;
@@ -37,13 +41,17 @@ public class User implements UserDetails {
 
     @Column(nullable = false, length = 30)
     private String auth;
+    
+    @Column(nullable = false, length = 1)
+    private String enabled;
 
     @Builder
-    public User(String userId, String name, String password, String auth) {
+    public User(String userId, String name, String password, String auth, String enabled) {
         this.userId = userId;
         this.name = name;
         this.password = password;
         this.auth = auth;
+        this.enabled = enabled;
     }
 
     @Override

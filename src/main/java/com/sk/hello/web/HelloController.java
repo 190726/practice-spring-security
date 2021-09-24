@@ -14,8 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("hello")
-public class HelloController {
-
+public class HelloController{
 
     private final HelloRepository repository;
 
@@ -23,7 +22,7 @@ public class HelloController {
     public String hello() {
         repository.save(new Hello(1L, "ss"));
         repository.save(new Hello(2L, "ss1"));
-        return "hello save called...";
+        return "hello save called.";
     }
 
     @GetMapping("/hellos")

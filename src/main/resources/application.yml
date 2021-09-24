@@ -3,7 +3,7 @@ server:
 
 logging:
     level:
-      root: info
+      root: error
       com:
         sk: debug
       p4spy: info # query ? 값 출력

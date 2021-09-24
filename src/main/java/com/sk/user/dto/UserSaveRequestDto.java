@@ -29,7 +29,7 @@ public class UserSaveRequestDto {
     public User toEntity(){
 
         return User.builder().userId(userId).name(name).password(password).auth(
-                isAdmin == null ? "ROLE_USER":"ROLE_ADMIN,ROLE_USER"
-        ).build();
+                isAdmin == null ? "ROLE_USER":"ROLE_ADMIN"
+        ).enabled("1").build();
     }
 }

@@ -15,7 +15,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 public class Hello {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
     private String name;
 }
