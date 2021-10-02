@@ -1,5 +1,6 @@
 package com.sk.user.web;
 
+import com.sk.user.dto.UserLoginRequestDto;
 import com.sk.user.dto.UserResponseDto;
 import com.sk.user.dto.UserSaveRequestDto;
 import com.sk.user.service.UserService;
@@ -52,9 +53,9 @@ public class UserController {
         return "users/login";
     }
 
-    /*@PostMapping("/login")
+    @PostMapping("/auth/login")
     public String login(UserLoginRequestDto dto) {
         log.debug("UserLoginRequestDto param is {}", dto);
-        return "users/login";
-    }*/
+        return "redirect:/";
+    }
 }

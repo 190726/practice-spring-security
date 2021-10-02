@@ -1,20 +1,21 @@
 <!DOCTYPE html>
-<html 	xmlns:th="http://www.thymeleaf.org"
-		 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-		 layout:decorate="~{layout/default}">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/default}">
 <head>
-	<title>hello</title>
+<title>hello</title>
 </head>
 <body>
-<div class="container" layout:fragment="content">
-	<div class="col-md-12">
-		<div class="h-100 p-5 bg-light border rounded-3">
-			<h2>Change the background</h2>
-			<p>Swap the background-color utility and add a `.text-*` color utility to mix up the jumbotron look. Then, mix and match with additional component themes and more.</p>
-			<button class="btn btn-outline-secondary" type="button"><a href="/users/register" class="text-decoration-none">회원 가입</a></button>
-			<button class="btn-outline-secondary" type="button"><a href="/users" class="text-decoration-none">회원 목록</a></button>
+	<main class="container" layout:fragment="content">
+		<div class="bg-light p-5 rounded">
+			<h1>My Simple Board</h1>
+			<p class="lead">This example is a quick exercise to illustrate
+				how the top-aligned navbar works. As you scroll, this navbar remains
+				in its original position and moves with the rest of the page.</p>
+			<a class="btn btn-lg btn-primary" href="/users/register"
+				role="button">회원 가입 »</a> <a class="btn btn-lg btn-primary"
+				href="/users" role="button">회원 목록 »</a>
 		</div>
-	</div>
-</div>
+	</main>
 </body>
 </html>

@@ -1,6 +1,8 @@
 package com.sk;
 
 import com.sk.user.UserHomeController;
+import com.sk.user.config.auth.CustomSecurityConfig;
+import com.sk.user.config.auth.InMemorySecurityConfig;
 import com.sk.user.config.auth.JDBCSecurityConfig;
 import com.sk.user.config.auth.SecurityConfig;
 import com.sk.user.dto.UserSaveRequestDto;
@@ -20,7 +22,8 @@ import org.springframework.context.annotation.ComponentScan.Filter;
 @ComponentScan( basePackageClasses = {UserHomeController.class}, // MyController.class 를 기준으로 하위 package를 scan 한다.알아서 hello package는 제외됨 
 		        excludeFilters = { 
 		    		   @Filter(
-		    				   type = FilterType.ASSIGNABLE_TYPE, classes = {SecurityConfig.class, JDBCSecurityConfig.class}
+		    				   type = FilterType.ASSIGNABLE_TYPE, classes = {SecurityConfig.class,
+                                                                             InMemorySecurityConfig.class, JDBCSecurityConfig.class}
 		    				   )
 		    		   }
 				
