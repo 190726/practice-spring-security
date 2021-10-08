@@ -14,9 +14,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.annotation.PostConstruct;
@@ -45,7 +47,7 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()   //csrf 비활성화하고자 하는 경우
+                //.csrf().disable()   //csrf 비활성화하고자 하는 경우
 //                .csrf()
 //                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 //                    .and()
@@ -54,13 +56,21 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/hello/**").access("hasRole('USER')")
                 .antMatchers("/users/**").access("hasRole('ADMIN')")
                 .antMatchers("/", "/**").permitAll()
+//                .and()
+//                	/* for H2 console */
+//                	.csrf().ignoringAntMatchers("/h2-console/**")
+//        		.and()
+//                	.headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
+//            	.and()
+//            		.exceptionHandling()
+//            		.accessDeniedPage("/denied")
                 .and()
-                .formLogin()
-                .loginPage("/auth/login")
-                .permitAll()
+                	.formLogin()
+                	.loginPage("/auth/login")
+                	.permitAll()
                 .and()
-                .logout()
-                .permitAll();
+                	.logout()
+                	.permitAll();
     }
 
     @Override
@@ -74,7 +84,7 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
                 new AntPathRequestMatcher("/auth/login", HttpMethod.POST.name())
         );
         filter.setAuthenticationManager(authenticationManagerBean());
-        //filter.setAuthenticationSuccessHandler(new SimpleUrlAuthenticationSuccessHandler("/"));
+        filter.setAuthenticationSuccessHandler(new SimpleUrlAuthenticationSuccessHandler("/"));
         filter.setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler("/auth/login?error"));
         return filter;
     }

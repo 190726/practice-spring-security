@@ -1,13 +1,13 @@
 package com.sk.user.config.auth;
 
-import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-
 import java.util.Collection;
 
+import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+
 public class CustomAuthenticationToken extends AbstractAuthenticationToken {
-    private String email;
+	private static final long serialVersionUID = 1L;
+	private String email;
     private String credentials;
 
     public CustomAuthenticationToken(String email, String credentials, Collection<? extends GrantedAuthority> authorities) {
@@ -29,4 +29,11 @@ public class CustomAuthenticationToken extends AbstractAuthenticationToken {
     public Object getPrincipal() {
         return this.email;
     }
+
+	@Override
+	public void setAuthenticated(boolean authenticated) {
+		super.setAuthenticated(authenticated);
+	}
+    
+    
 }

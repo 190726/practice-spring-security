@@ -9,6 +9,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.sk.comm.domain.BaseTimeEntity;
+
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Collection;
@@ -21,9 +23,7 @@ import java.util.stream.Collectors;
 @SequenceGenerator(name="USER_SEQ_GEN",
         sequenceName = "SEQ_T_USER",
         initialValue = 1)
-public class User implements UserDetails {
-
-	private static final long serialVersionUID = 1L;
+public class User extends BaseTimeEntity{
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY,
@@ -53,34 +53,5 @@ public class User implements UserDetails {
         this.auth = auth;
         this.enabled = enabled;
     }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(auth.split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-    }
-
-    @Override
-    public String getUsername() {
-        return userId;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+    
 }

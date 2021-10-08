@@ -1,32 +1,35 @@
 package com.sk;
 
-import com.sk.user.UserHomeController;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScan.Filter;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
 import com.sk.user.config.auth.CustomSecurityConfig;
 import com.sk.user.config.auth.InMemorySecurityConfig;
 import com.sk.user.config.auth.JDBCSecurityConfig;
 import com.sk.user.config.auth.SecurityConfig;
 import com.sk.user.dto.UserSaveRequestDto;
 import com.sk.user.service.UserService;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
-import org.springframework.context.annotation.ComponentScan.Filter;
 
 /**
  * practice-2110 My Application
  */
+@EnableJpaAuditing // JPA Auditing 활성화
 @SpringBootApplication
-@ComponentScan( basePackageClasses = {UserHomeController.class}, // MyController.class 를 기준으로 하위 package를 scan 한다.알아서 hello package는 제외됨 
+@ComponentScan( 
+		        //basePackageClasses = {UserHomeController.class}, // MyController.class 를 기준으로 하위 package를 scan 한다.알아서 hello package는 제외됨 
 		        excludeFilters = { 
-		    		   @Filter(
-		    				   type = FilterType.ASSIGNABLE_TYPE, classes = {SecurityConfig.class,
-                                                                             InMemorySecurityConfig.class, JDBCSecurityConfig.class}
-		    				   )
-		    		   }
-				
+	    		   @Filter(
+	    				   type = FilterType.ASSIGNABLE_TYPE, classes = {SecurityConfig.class,
+	    						   									     //CustomSecurityConfig.class,
+                                                                         InMemorySecurityConfig.class, JDBCSecurityConfig.class}
+	    				   )
+    		   }
 )
 public class MyApplication  {
     public static void main(String[] args) {
